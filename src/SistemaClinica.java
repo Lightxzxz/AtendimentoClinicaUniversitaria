@@ -4,7 +4,7 @@ public class SistemaClinica {
     public static void main(String[] args) {
         imprimirCabecalho();
 
-        FilaDePacientes fila = new FilaDePacientes();
+        FilaEncadeadaDePacientes fila = new FilaEncadeadaDePacientes();
         ListaDeAtendidos atendidos = new ListaDeAtendidos();
 
         adicionarPacientesFila(fila);
@@ -12,6 +12,8 @@ public class SistemaClinica {
         consultarProximoPaciente(fila);
         exibirRelatorioAtendimentos(atendidos);
         testarPesquisas(atendidos);
+
+        exibirRelatorioDiario(atendidos);
 
         exibirResumoFinal(fila, atendidos);
     }
@@ -22,14 +24,14 @@ public class SistemaClinica {
     }
 
 
-    private static void adicionarPacientesFila(FilaDePacientes fila) {
+    private static void adicionarPacientesFila(FilaEncadeadaDePacientes fila) {
 
         Paciente[] pacientes = {
-                new Paciente("João Silva", 25, "Dor de cabeça"),
-                new Paciente("Maria Santos", 35, "Febre"),
-                new Paciente("Pedro Oliveira", 28, "Dor nas costas"),
-                new Paciente("Ana Costa", 22, "Gripe"),
-                new Paciente("Carlos Pereira", 45, "Pressão alta")
+                new Paciente("João Silva", 25, "Dor de cabeça", false),
+                new Paciente("Maria Santos", 35, "Febre", false),
+                new Paciente("Pedro Oliveira", 28, "Dor nas costas", false),
+                new Paciente("Ana Costa", 22, "Gripe", false),
+                new Paciente("Carlos Pereira", 45, "Pressão alta", true)
         };
 
         for (Paciente paciente : pacientes) {
@@ -39,7 +41,7 @@ public class SistemaClinica {
         fila.exibirFila();
     }
 
-    private static void atenderPacientes(FilaDePacientes fila, ListaDeAtendidos atendidos) {
+    private static void atenderPacientes(FilaEncadeadaDePacientes fila, ListaDeAtendidos atendidos) {
 
         final int PACIENTES_A_ATENDER = 3;
 
@@ -58,7 +60,7 @@ public class SistemaClinica {
     }
 
 
-    private static void consultarProximoPaciente(FilaDePacientes fila) {
+    private static void consultarProximoPaciente(FilaEncadeadaDePacientes fila) {
 
         Paciente proximo = fila.peek();
         if (proximo != null) {
@@ -108,7 +110,7 @@ public class SistemaClinica {
         System.out.println();
     }
 
-    private static void exibirResumoFinal(FilaDePacientes fila, ListaDeAtendidos atendidos) {
+    private static void exibirResumoFinal(FilaEncadeadaDePacientes fila, ListaDeAtendidos atendidos) {
         System.out.println("RESUMO FINAL DO DIA:");
         System.out.println("=======================");
         System.out.println("• Pacientes ainda na fila: " + fila.getTamanho());
@@ -139,5 +141,29 @@ public class SistemaClinica {
         }
 
         System.out.println(" Tipo: " + tipoConsulta + " - Paciente de " + paciente.getIdade() + " anos");
+    }
+
+    private static void exibirRelatorioDiario(ListaDeAtendidos atendidos) {
+        System.out.println("--- RELATÓRIO DIÁRIO DE ATENDIMENTOS ---");
+
+        if (atendidos.isEmpty()) {
+            System.out.println("Nenhum paciente foi atendido hoje para gerar o relatório.");
+            System.out.println("------------------------------------------\n");
+            return;
+        }
+
+        // 1. Pega o total de pacientes atendidos
+        int totalAtendidos = atendidos.getTamanho();
+
+        // 2. Calcula a média de idade
+        double mediaIdade = atendidos.calcularMediaIdade();
+
+        // 3. Encontra o paciente mais idoso
+        Paciente pacienteMaisIdoso = atendidos.encontrarPacienteMaisIdoso();
+
+        System.out.println("Total de pacientes atendidos: " + totalAtendidos);
+        System.out.printf("Média de idade: %.1f anos\n", mediaIdade); // Usando printf para formatar
+        System.out.println("Paciente mais idoso: " + pacienteMaisIdoso); // Usa o toString() do Paciente
+        System.out.println("------------------------------------------\n");
     }
 }

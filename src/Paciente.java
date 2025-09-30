@@ -3,12 +3,14 @@ public class Paciente {
     private String nome;
     private int idade;
     private String sintoma;
+    private boolean urgente; // NOVO CAMPO
 
 
-    public Paciente(String nome, int idade, String sintoma) {
+    public Paciente(String nome, int idade, String sintoma, boolean urgente) {
         this.nome = nome;
         this.idade = idade;
         this.sintoma = sintoma;
+        this.urgente = urgente;
     }
 
     public String getNome() {
@@ -21,6 +23,13 @@ public class Paciente {
 
     public String getSintoma() {
         return sintoma;
+    }
+    public boolean isUrgente() {
+        return urgente;
+    }
+
+    public void setUrgente(boolean urgente) {
+        this.urgente = urgente;
     }
 
     public void setNome(String nome) {
@@ -35,11 +44,10 @@ public class Paciente {
         this.sintoma = sintoma;
     }
 
-
-    @Override
     public String toString() {
-        return String.format("Paciente: %s, %d anos, Sintoma: %s",
-                nome, idade, sintoma);
+        String statusUrgencia = urgente ? " [URGENTE]" : "";
+        return String.format("Paciente: %s, %d anos, Sintoma: %s%s",
+                nome, idade, sintoma, statusUrgencia);
     }
 
 

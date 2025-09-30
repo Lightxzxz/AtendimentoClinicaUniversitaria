@@ -1,11 +1,11 @@
 
-public class FilaDePacientes {
+public class FilaEncadeadaDePacientes {
     private No inicio;
     private No fim;
     private int tamanho;
 
 
-    public FilaDePacientes() {
+    public FilaEncadeadaDePacientes() {
         this.inicio = null;
         this.fim = null;
         this.tamanho = 0;

@@ -125,4 +125,35 @@ public class ListaDeAtendidos {
         return String.format("Lista: %d/%d pacientes (%.1f%% de uso)",
                 tamanho, capacidade, percentualUso);
     }
+    public double calcularMediaIdade() {
+        if (isEmpty()) {
+            return 0.0;
+        }
+
+        int somaDasIdades = 0;
+        for (int i = 0; i < tamanho; i++) {
+            somaDasIdades += atendidos[i].getIdade();
+        }
+
+        // Faz a conversão para double para garantir uma divisão com casas decimais
+        return (double) somaDasIdades / tamanho;
+    }
+
+    public Paciente encontrarPacienteMaisIdoso() {
+        if (isEmpty()) {
+            return null;
+        }
+
+        // Assume que o primeiro paciente é o mais idoso inicialmente
+        Paciente maisIdoso = atendidos[0];
+
+        // Começa a verificação a partir do segundo paciente
+        for (int i = 1; i < tamanho; i++) {
+            if (atendidos[i].getIdade() > maisIdoso.getIdade()) {
+                // Se encontrar um mais idoso, atualiza a referência
+                maisIdoso = atendidos[i];
+            }
+        }
+        return maisIdoso;
+    }
 }

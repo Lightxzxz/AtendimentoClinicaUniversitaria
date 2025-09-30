@@ -1,0 +1,3 @@
+A flexibilidade de inserir com prioridade tem um custo computacional na inserção. A remoção continua extremamente rápida.
+
+ fila encadeada evita o trabalho pesado de reorganizar a memória, tornando-a a escolha natural para este tipo de problema.
